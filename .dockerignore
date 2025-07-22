@@ -1,0 +1,51 @@
+**/__pycache__
+**/*.pyc
+**/*.pyo
+**/*.pyd
+**/.Python
+**/env
+**/venv
+**/.venv
+**/pip-log.txt
+**/pip-delete-this-directory.txt
+**/.tox
+**/.coverage
+**/.coverage.*
+**/.pytest_cache
+**/nosetests.xml
+**/coverage.xml
+**/htmlcov
+**/.cache
+**/.mypy_cache
+**/.dmypy.json
+**/dmypy.json
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+docs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.*
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Testing
+tests/
+.pytest_cache/
+
+!start.sh

@@ -24,11 +24,15 @@ COPY ./requirements.txt /code/requirements.txt
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r /code/requirements.txt
 
-# Copiar o código da aplicação
+# Copiar o código da aplicação e script de inicialização
 COPY ./app /code/app
+COPY ./start.sh /code/start.sh
+
+# Dar permissão de execução ao script
+RUN chmod +x /code/start.sh
 
 # Expor a porta da aplicação
 EXPOSE 8000
 
-# Executar a aplicação
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Executar script de inicialização
+CMD ["./start.sh"]
