@@ -1,7 +1,13 @@
-from .entities import User
-from .schemas import UserBase, UserCreate, UserUpdate, UserResponse
+from .entities import User, Note
+from .schemas import (
+    UserBase, UserCreate, UserUpdate, UserResponse,
+    NoteBase, NoteCreate, NoteUpdate, NoteResponse
+)
 
 __all__ = [
-    "User",
-    "UserBase", "UserCreate", "UserUpdate", "UserResponse"
+    "User", "Note", "File", "Access",
+    "UserBase", "UserCreate", "UserUpdate", "UserResponse",
+    "NoteBase", "NoteCreate", "NoteUpdate", "NoteResponse",
+    "FileBase", "FileCreate", "FileUpdate", "FileResponse",
+    "AccessBase", "AccessCreate", "AccessUpdate", "AccessResponse"
 ]
