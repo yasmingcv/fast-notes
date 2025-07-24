@@ -2,6 +2,7 @@ from typing import List
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db
+from app.routers import user_router
 
 app = FastAPI(title="Fast Notes API", version="1.0.0")
 
@@ -9,3 +10,5 @@ app = FastAPI(title="Fast Notes API", version="1.0.0")
 @app.get("/")
 def hello():
     return {"message": "Hello, World!"}
+
+app.include_router(user_router)
