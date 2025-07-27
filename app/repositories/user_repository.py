@@ -1,25 +1,18 @@
 from sqlalchemy.orm import Session
-from app.domain import User
+from typing import Optional
+from app.domain import User, UserCreate, UserUpdate
+from .base_repository import BaseRepository
 
-def create_user(db: Session, user: User):
-    db_user = User(**user.dict())
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
 
-def list_users(db: Session, skip: int = 0, limit: int = 10):
-    return db.query(User).offset(skip).limit(limit).all()
+class UserRepository(BaseRepository[User, UserCreate]):
+    def __init__(self, db: Session):
+        super().__init__(db, User)
+    
+    def get_by_email(self, email: str) -> Optional[User]:
+        return self.db.query(User).filter(User.email == email).first()
+    
+    def get_by_name(self, name: str) -> Optional[User]:
+        return self.db.query(User).filter(User.name == name).first()
 
-def get_user_by_email(db: Session, email: str):
-    return db.query(User).filter(User.email == email).first()
-
-def update_user(db: Session, user_id: int, user_data: User):
-    db_user = db.query(User).filter(User.id == user_id).first()
-    if not db_user:
-        return None
-    for key, value in user_data.dict(exclude_unset=True).items():
-        setattr(db_user, key, value)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
+    def update_user(self, user_id: int, user_update: UserUpdate) -> Optional[User]:
+        return self.update(user_id, user_update)
