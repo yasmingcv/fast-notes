@@ -24,4 +24,3 @@ class FileResponse(FileBase):
 
     class Config:
         from_attributes = True
-        orm_mode = True  # Permite que o modelo seja compatível com ORM como SQLAlchemy

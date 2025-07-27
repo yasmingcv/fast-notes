@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.domain import UserCreate, UserUpdate, UserResponse
 from app.services import user_service
+from app.auth import get_current_user
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -37,6 +38,23 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
             detail="User not found"
         )
     return db_user
+
+@router.put("/me", response_model=UserResponse)
+def update_current_user(
+    user_update: UserUpdate, 
+    current_user: UserResponse = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    try:
+        db_user = user_service.update(db, current_user.id, user_update)
+        if db_user is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="User not found"
+            )
+        return db_user
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @router.put("/{user_id}", response_model=UserResponse)
 def update_user(user_id: int, user: UserUpdate, db: Session = Depends(get_db)):

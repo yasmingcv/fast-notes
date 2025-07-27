@@ -9,5 +9,10 @@ class AccessService(BaseService[Access, AccessCreate, AccessUpdate, AccessRespon
         super().__init__(AccessRepository)
         self.response_schema = AccessResponse
         
+    def get_active_access_token(self, db: Session, token: str):
+        repo = self._get_repository(db)
+        return repo.get_active_access_token(token)
+
+        
         
 access_service = AccessService()
