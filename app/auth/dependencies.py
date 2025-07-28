@@ -13,13 +13,9 @@ def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
     db: Session = Depends(get_db)
 ) -> UserResponse:
-    """
-    Dependência para obter o usuário atual através do token JWT
-    """
     token = credentials.credentials
     
     try:
-        # Decodificar o token JWT
         payload = jwt.decode_token(token)
         
         if payload is None:
@@ -38,10 +34,6 @@ def get_current_user(
                 headers={"WWW-Authenticate": "Bearer"},
             )
         
-        # Verificar se o token está ativo na tabela access
-        # (Opcional: você pode implementar essa verificação se quiser)
-        
-        # Buscar o usuário
         user = user_service.get_by_id(db, user_id)
         if user is None:
             raise HTTPException(
@@ -59,8 +51,9 @@ def get_current_user(
             headers={"WWW-Authenticate": "Bearer"},
         )
     except Exception as e:
+        print(e)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Erro na autenticação",
+            detail=str(e),
             headers={"WWW-Authenticate": "Bearer"},
         )

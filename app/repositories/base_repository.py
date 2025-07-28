@@ -11,7 +11,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType]):
         self.model = model
 
     def create(self, obj_in: CreateSchemaType) -> ModelType:
-        db_obj = self.model(**obj_in.dict())
+        db_obj = self.model(**obj_in.model_dump())
         self.db.add(db_obj)
         self.db.commit()
         self.db.refresh(db_obj)
@@ -27,7 +27,7 @@ class BaseRepository(Generic[ModelType, CreateSchemaType]):
         db_obj = self.get(id)
         if not db_obj:
             return None
-        for key, value in obj_in.dict(exclude_unset=True).items():
+        for key, value in obj_in.model_dump(exclude_unset=True).items():
             setattr(db_obj, key, value)
         self.db.commit()
         self.db.refresh(db_obj)
@@ -40,3 +40,6 @@ class BaseRepository(Generic[ModelType, CreateSchemaType]):
         self.db.delete(db_obj)
         self.db.commit()
         return db_obj
+
+    def count(self) -> int:
+        return self.db.query(self.model).count()

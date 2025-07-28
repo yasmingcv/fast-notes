@@ -6,7 +6,7 @@ from pydantic import BaseModel
 class NoteBase(BaseModel):
     title: str
     content: str
-
+    user_id: Optional[int] = None
 class NoteCreate(NoteBase):
     pass
 
@@ -16,7 +16,6 @@ class NoteUpdate(BaseModel):
 
 class NoteResponse(NoteBase):
     id: int
-    user_id: int
     created_at: datetime
     updated_at: Optional[datetime] = None
 
