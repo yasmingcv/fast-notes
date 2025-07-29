@@ -15,6 +15,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 def login(email: str, password: str, db: Session):
     user = user_service.get_user_by_email(db, email)
     print(user)
+    if user is None:
+        raise HTTPException(status_code=401, detail="Usuário inválido")
     print(bcrypt.verify_password(password, user.password))
     if user is None or bcrypt.verify_password(password, user.password) is False:
         raise HTTPException(status_code=400, detail="Credenciais inválidas")

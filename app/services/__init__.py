@@ -2,6 +2,7 @@ from .base_service import BaseService
 from .user_service import UserService, user_service
 from .access_service import AccessService, access_service
 from .note_service import NoteService, note_service
+from .file_service import FileService, file_service
 
 __all__ = [
     "BaseService",
@@ -10,5 +11,7 @@ __all__ = [
     "AccessService",
     "access_service",
     "NoteService",
-    "note_service"
+    "note_service",
+    "FileService",
+    "file_service"
 ]
