@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, File, UploadFile,
 from sqlalchemy.orm import Session
 from app.database import get_db
 from app.domain import FileCreate, FileUpdate, FileResponse
-from app.services import file_service
+from app.services import file_service, note_service
 from app.auth import get_current_user
 import boto3
 import os
@@ -26,6 +26,11 @@ async def upload_file(
     current_user = Depends(get_current_user)
 ):
     try:
+        note = note_service.get_by_id(db, note_id)
+        if note is None:
+            raise HTTPException(status_code=404, detail="Note not found")
+        if note.user_id != current_user.id:
+            raise HTTPException(status_code=401, detail="User not authorized to add files to this note")
         s3_key = f"notes/{note_id}/{file.filename}"
         s3_client.upload_fileobj(
             file.file, 
