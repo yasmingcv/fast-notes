@@ -124,8 +124,6 @@ SECRET_KEY_JWT=your_jwt_secret
 
 ### 📁 Arquivos
 - `POST /files/upload` - Upload de arquivo
-- `GET /files/{id}` - Download de arquivo
-- `DELETE /files/{id}` - Deletar arquivo
 
 
 ## 🤝 Contribuição
