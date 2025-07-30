@@ -140,6 +140,11 @@ Contribuições são bem-vindas! Sinta-se à vontade para:
 
 Desenvolvido por [Yasmin Gonçalves](https://github.com/yasmingcv)
 
+
+## 🗝️ Licença
+
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](./LICENSE) para detalhes.
+
 ---
 
 ⭐ **Se este projeto te ajudou, considere dar uma estrela!** ⭐
